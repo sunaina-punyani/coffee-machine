@@ -2,6 +2,9 @@
 
 To run via commandline :
 
-1. Install maven (if using linux, try - sudo apt install maven)
-2. To build the project fire command - mvn install
-3. To run the project, inside the project directory "coffee-machine", fire command -  java -jar target/coffee-machine-0.0.1-SNAPSHOT.jar
++ Install maven (if using linux, to isntall use command : 
+  <code>sudo apt install maven</code>
++ To build the project use command : 
+  <code>mvn install</code>
++ To run the project, inside the project directory "coffee-machine", use command :  
+  <code>java -jar target/coffee-machine-0.0.1-SNAPSHOT.jar</code>
