@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+/**
+ * Utility class to read json input from file and form models
+ */
 @Component
 public class InputReader {
 
@@ -25,13 +28,10 @@ public class InputReader {
         SystemDetails systemDetails = null;
         MachineDetails machineDetails = null;
         try {
-            //System.out.println("ip:" +inputPath);
             systemDetails = objectMapper.readValue(getClass().getResource(inputPath), SystemDetails.class);
-            //logger.info(systemDetails.toString());
             machineDetails = systemDetails.getMachineDetails();
         }catch(Exception e){
-            e.printStackTrace();//TODO: comment this!!
-            logger.error("Parsing input failed");
+            logger.error("Parsing input failed :" + e);
             return Optional.empty();
         }
         return Optional.of(machineDetails);

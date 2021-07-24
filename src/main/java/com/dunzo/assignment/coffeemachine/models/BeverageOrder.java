@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.Map;
 
+/**
+ * Model to store a beverage order
+ */
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -5,6 +5,9 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * Model to store an ingredient
+ */
 @Data
 @Builder
 @NoArgsConstructor
@@ -17,7 +20,7 @@ public class Ingredient {
     private Boolean isRunningLow;
 
     /**
-     *
+     * True if model is running low in quantity
      * @param runningLow
      */
     public void setRunningLow(Boolean runningLow) {
@@ -25,7 +28,8 @@ public class Ingredient {
     }
 
     /**
-     *
+     * Change available quantity of ingredient post usage, compare with threshold percent of max capacity and
+     * mark isRunningLow true or false accordingly
      * @param availableQuantity
      */
     public void setAvailableQuantity(BigDecimal availableQuantity) {
@@ -34,7 +38,7 @@ public class Ingredient {
     }
 
     /**
-     *
+     * Compare with threshold percent of max capacity and mark isRunningLow true or false accordingly
      * @return
      */
     public Boolean checkForQuantityRunningLow(){

@@ -3,6 +3,9 @@ package com.dunzo.assignment.coffeemachine.utility;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * Utility class to read and load properties from application.properties file"
+ */
 @Component
 public class PropertyReader {
 

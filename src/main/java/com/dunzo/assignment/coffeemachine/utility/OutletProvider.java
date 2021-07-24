@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class OutletProvider {
 
     /**
-     *
+     * This class is to only ensure per thread a new instance of BeverageOutletService(ProtoType Bean) is provided as that service maintains order assigned
      * @return
      */
     @Lookup

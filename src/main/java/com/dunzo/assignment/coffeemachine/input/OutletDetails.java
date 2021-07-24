@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
+/**
+ * Model to read input from json
+ */
 @Data
 @Builder
 @JsonDeserialize

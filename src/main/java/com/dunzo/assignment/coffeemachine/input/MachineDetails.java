@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Model to read input from json
+ */
 @Data
 @Builder
 @JsonDeserialize

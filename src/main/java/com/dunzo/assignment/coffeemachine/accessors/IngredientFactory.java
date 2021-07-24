@@ -1,6 +1,6 @@
 package com.dunzo.assignment.coffeemachine.accessors;
 
-import com.dunzo.assignment.coffeemachine.constants.BeverageConstants;
+import com.dunzo.assignment.coffeemachine.constants.SystemConstants;
 import com.dunzo.assignment.coffeemachine.exceptions.IngredientAlreadyPresentException;
 import com.dunzo.assignment.coffeemachine.exceptions.IngredientNotExistentException;
 import com.dunzo.assignment.coffeemachine.models.Ingredient;
@@ -66,9 +66,11 @@ public class IngredientFactory {
     }
 
     /**
-     *
-     * @param ingredientQuantityMap
-     * @throws IngredientAlreadyPresentException
+     * Initialize the ingredient factory with ingredients, for simplicity, assuming ingredients are filled in their max capacity
+     * @param ingredientQuantityMap - ingredient and amounts
+     * @throws IngredientAlreadyPresentException - ingredient has already been added in max capacity, can't accept more, this exception will
+     * never happen here as we are reading from a hash map, so duplicate insertions would have been overwritten, but writing this to track
+     * an edge case for future if hash map based storage is changed to models instead.
      */
     public void initializeIngredientFactory(Map<String, BigDecimal> ingredientQuantityMap) throws IngredientAlreadyPresentException {
         ingredientStorageMap = new ConcurrentHashMap<>();
@@ -80,7 +82,7 @@ public class IngredientFactory {
                     .name(ingredientEntry.getKey())
                     .maxQuantity(ingredientEntry.getValue())
                     .availableQuantity(ingredientEntry.getValue())
-                    .thresholdPercent(BigDecimal.valueOf(BeverageConstants.THRESHOLD_PERCENTAGE_QUANTITY))
+                    .thresholdPercent(BigDecimal.valueOf(SystemConstants.THRESHOLD_PERCENTAGE_QUANTITY))
                     .isRunningLow(false)
                     .build();
             ingredientStorageMap.put(ingredientEntry.getKey(), ingredient);
@@ -88,7 +90,8 @@ public class IngredientFactory {
     }
 
     /**
-     *
+     * Check if ingredient is running low, maintaining a constant threshold percentage, if quantity falls below the threshold percentage of max capacity,
+     * the ingredient is running low, it is maintained in the isRunningLow field and updated every time ingredient is used.
      * @param ingredientName
      * @return boolean
      * @throws IngredientNotExistentException

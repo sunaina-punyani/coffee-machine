@@ -14,6 +14,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Optional;
 
+/**
+ * This is the start of the application
+ * It uses the CoffeeBrewingService, initializes it with outlets
+ * The ingredients added are also handed over to the CoffeeBrewingService which it does not store with itself but registers them
+ * with the IngredientFactory
+ * It supplies the beverage orders to the order service
+ * Upon completing above tasks, it kick starts the CoffeeBrewingService which is responsible to fulfill orders via all outlets in
+ * achieved by using multithreading
+ * Spring Boot is used to write this application
+ * Singleton, ProtoType beans, factories are used to design
+ * Constants and application properties are used to avoid hard coding
+ */
 
 @SpringBootApplication
 public class CoffeeMachineApplication implements ApplicationRunner {
@@ -38,7 +50,7 @@ public class CoffeeMachineApplication implements ApplicationRunner {
 	}
 
 	/**
-	 *
+	 *	Initializes CoffeeBrewingService, hands over the orders to the order service and kick starts the CoffeeBrewingService
 	 * @param args
 	 */
 	@Override
@@ -57,7 +69,7 @@ public class CoffeeMachineApplication implements ApplicationRunner {
 			logger.error("Coffee brewing service could not be initialized, exiting!");
 			return;
 		}
-		orderService.initialize(machineDetails.getBeverageCompositionsMap());
+		orderService.enqueueOrders(machineDetails.getBeverageCompositionsMap());
 		coffeeBrewingService.brew();
 		logger.info("Orders finished, Yay!");
 

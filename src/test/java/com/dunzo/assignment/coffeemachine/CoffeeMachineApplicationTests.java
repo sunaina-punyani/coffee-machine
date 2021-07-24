@@ -8,20 +8,15 @@ import com.dunzo.assignment.coffeemachine.utility.InputReader;
 import com.dunzo.assignment.coffeemachine.utility.PropertyReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.DefaultApplicationArguments;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 
@@ -65,7 +60,7 @@ class CoffeeMachineApplicationTests {
 			Assert.assertEquals(coffeeBrewingService.getNumberOfBeveragesDelivered(), 0);
 			return;
 		}
-		orderService.initialize(machineDetails.getBeverageCompositionsMap());
+		orderService.enqueueOrders(machineDetails.getBeverageCompositionsMap());
 		coffeeBrewingService.brew();
 		logger.info("Orders finished, Yay!");
 
@@ -86,7 +81,7 @@ class CoffeeMachineApplicationTests {
 			logger.error("Coffee brewing service could not be initialized, exiting!");
 			return;
 		}
-		orderService.initialize(machineDetails.getBeverageCompositionsMap());
+		orderService.enqueueOrders(machineDetails.getBeverageCompositionsMap());
 		coffeeBrewingService.brew();
 		logger.info("Orders finished, Yay!");
 		Assert.assertEquals(coffeeBrewingService.getNumberOfBeveragesDelivered(), 0);
@@ -107,7 +102,7 @@ class CoffeeMachineApplicationTests {
 			logger.error("Coffee brewing service could not be initialized, exiting!");
 			return;
 		}
-		orderService.initialize(machineDetails.getBeverageCompositionsMap());
+		orderService.enqueueOrders(machineDetails.getBeverageCompositionsMap());
 		coffeeBrewingService.brew();
 		logger.info("Orders finished, Yay!");
 		Assert.assertEquals(coffeeBrewingService.getNumberOfBeveragesDelivered(), 0);
@@ -128,7 +123,7 @@ class CoffeeMachineApplicationTests {
 			logger.error("Coffee brewing service could not be initialized, exiting!");
 			return;
 		}
-		orderService.initialize(machineDetails.getBeverageCompositionsMap());
+		orderService.enqueueOrders(machineDetails.getBeverageCompositionsMap());
 		coffeeBrewingService.brew();
 		logger.info("Orders finished, Yay!");
 		Assert.assertEquals(coffeeBrewingService.getNumberOfBeveragesDelivered(), 2);
@@ -149,7 +144,7 @@ class CoffeeMachineApplicationTests {
 			logger.error("Coffee brewing service could not be initialized, exiting!");
 			return;
 		}
-		orderService.initialize(machineDetails.getBeverageCompositionsMap());
+		orderService.enqueueOrders(machineDetails.getBeverageCompositionsMap());
 		coffeeBrewingService.brew();
 		logger.info("Orders finished, Yay!");
 		Assert.assertEquals(coffeeBrewingService.getNumberOfBeveragesDelivered(), 0);
@@ -170,11 +165,33 @@ class CoffeeMachineApplicationTests {
 			logger.error("Coffee brewing service could not be initialized, exiting!");
 			return;
 		}
-		orderService.initialize(machineDetails.getBeverageCompositionsMap());
+		orderService.enqueueOrders(machineDetails.getBeverageCompositionsMap());
 		coffeeBrewingService.brew();
 		logger.info("Orders finished, Yay!");
 		Assert.assertEquals(coffeeBrewingService.getNumberOfBeveragesDelivered(), 2);
 	}
+
+	@Test
+	public void GoodInputScenarioTest() {
+		logger.info("WELCOME!");
+
+		Optional<MachineDetails> machineDetailsOptional = inputReader.getInputData(propertyReader.getInputPath());
+
+		if(machineDetailsOptional.isEmpty()) {
+			logger.error("Parsing input failed, exiting!");
+			return;
+		}
+		MachineDetails machineDetails = machineDetailsOptional.get();
+		if(!coffeeBrewingService.initialize(machineDetails.getOutlets().getOutletCount(), machineDetails.getTotalItemsQuantityMap())){
+			logger.error("Coffee brewing service could not be initialized, exiting!");
+			return;
+		}
+		orderService.enqueueOrders(machineDetails.getBeverageCompositionsMap());
+		coffeeBrewingService.brew();
+		logger.info("Orders finished, Yay!");
+		Assert.assertEquals(coffeeBrewingService.getNumberOfBeveragesDelivered(), 2);
+	}
+
 
 
 }
