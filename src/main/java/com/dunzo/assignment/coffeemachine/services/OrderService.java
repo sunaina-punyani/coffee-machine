@@ -11,7 +11,8 @@ import java.util.*;
 
 /**
  * The service to manage the beverage orders for the coffee machine, it queues the orders and exposes methods to fetch orders
- * and get pending order count
+ * and get pending order count.
+ * Uses a Queue to service orders in sequence
  */
 @Service
 public class OrderService {
